@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 23:29:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/08 23:20:41 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/09 13:50:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdbool.h>
 
 # define OK 0
-# define KO -1
+# define KO 255
 # define TIMEOUT 32
 
 # define TIMEOUT_DELAY 5
@@ -63,12 +63,16 @@ void	exit_child(t_test **test, int *fd, int *stdout_backup, int status);
 
 /* OUTPUT.C */
 
-void	check_output(t_test *test);
-void	print_test_output(t_test *test, int test_number);
+void	check_stdout_output(t_test *test, int fd);
+void	print_test_output(t_test *test, int test_number, int log_file);
 void	ft_putstr_fd(char *str, int fd);
 void	ft_putchar(char c);
 int		display_results(int count_of_succeeded_tests,
 			int total_number_of_tests);
+
+/* RESULT_FILE.C */
+
+int		create_log_file(t_test *test);
 
 /* TEST_LST_UTILS.C */
 

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 12:14:46 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/08 23:22:15 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/09 13:55:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	tester_launcher(void)
 	load_test(&tests, function_name, "sigfpe", &sigfpe, NULL);
 	load_test(&tests, function_name, "sigpipe", &sigpipe, NULL);
 	load_test(&tests, function_name, "sigill", &sigill, NULL);
-	load_test(&tests, function_name, "putstr_ok", &putstr, "Test\n");
-	load_test(&tests, function_name, "putstr_ko", &putstr, "lol\n");
+	load_test(&tests, function_name, "putstr_ok", &putstr, "0123456789");
+	load_test(&tests, function_name, "putstr_ko", &putstr, "abcdefghij");
 	return (launch_tests(&tests));
 }

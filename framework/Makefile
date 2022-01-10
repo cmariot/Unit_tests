@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/08 22:17:56 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/09 01:16:04 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS			= launch_tests.c \
 				  libft.c \
 				  logfiles.c \
 				  output.c \
+				  result_file.c \
 				  test_lst_utils.c \
 				  timeout.c
 

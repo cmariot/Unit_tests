@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/09 14:07:39 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/10 12:09:56 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,14 @@
 #                          PROJECT'S DIRECTORIES                               #
 # **************************************************************************** #
 
-NAME			= tests
-SRCS_DIR		= srcs
+NAME			= tests_libft
+SRCS_DIR		= tests
 INCL_DIR		= ./includes
-INCL_DIR2		= ../../framework/includes
+INCL_FRAMEWORK	= ../../framework/includes
 OBJS_DIR		= objs/
 
+PROJECT_DIR		= ../../libft
+INCL_PROJECT	= $(PROJECT_DIR)/includes
 
 # **************************************************************************** #
 #                         COMPILATION AND LINK FLAGS                           #
@@ -30,9 +32,11 @@ CC				= clang
 
 CFLAGS			= -Wall -Wextra -Werror
 CFLAGS			= -I $(INCL_DIR)
-CFLAGS			+= -I $(INCL_DIR2)
+CFLAGS			+= -I $(INCL_FRAMEWORK)
+CFLAGS			+= -I $(INCL_PROJECT)
 
 LFLAGS			= -Wall -Wextra -Werror
+L_LIB_FLAGS		= -L $(PROJECT_DIR) -lft
 
 
 # **************************************************************************** #
@@ -41,9 +45,8 @@ LFLAGS			= -Wall -Wextra -Werror
 
 SRCS			= ../main.c \
 				  00_launcher.c \
-				  01_basic_test.c \
-				  02_null_test.c \
-				  03_bigger_str_test.c
+				  01_strlen_test.c \
+				  02_strtoll_test.c
 
 SRC				:= $(notdir $(SRCS))
 
@@ -73,6 +76,7 @@ all : $(NAME)
 # Compiling
 srcs_compil :
 		@make -C ../../framework
+		@make -C ../../libft
 		@printf "$(YE)Source code compilation ... \n"
 
 $(OBJS_DIR)%.o : %.c
@@ -88,7 +92,7 @@ obj_link :
 
 $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
 		@mv ../../framework/libunit.a .
-		@$(CC) $(LFLAGS) $(OBJS) libunit.a -o $(NAME)
+		@$(CC) $(LFLAGS) $(OBJS) libunit.a $(L_LIB_FLAGS) -o $(NAME)
 		@printf "$(GR)Success, $(NAME) is ready.\n\n$(RC)"
 
 # Check 42 norm
@@ -102,6 +106,7 @@ test :	all
 # Remove object files
 clean :
 		@make -C ../../framework clean
+		@make -C ../../libft clean
 		@printf "Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
 		@printf "Done\n$(RC)"
@@ -109,6 +114,7 @@ clean :
 # Remove object and binary files
 fclean :
 		@make -C ../../framework fclean
+		@make -C ../../libft fclean
 		@printf "Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
 		@printf "Done\n"

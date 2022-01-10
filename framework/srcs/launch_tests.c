@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 22:01:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/08 22:20:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/09 13:46:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,25 @@ void	execute_test(t_test **test)
 	}
 }
 
+#define STDOUT 1
+
 int	launch_tests(t_test **test)
 {
+	t_test	*first;
 	int		total_number_of_tests;
 	int		count_of_succeeded_tests;
 	int		routine_exit;
-	t_test	*first;
+	int		log_file;
 
 	first = (*test);
+	log_file = create_log_file(*test);
 	total_number_of_tests = 0;
 	count_of_succeeded_tests = 0;
 	printf("%s TESTS:\n", (*test)->function);
 	while (*test)
 	{
 		execute_test(test);
-		print_test_output(*test, total_number_of_tests);
+		print_test_output(*test, total_number_of_tests, log_file);
 		if ((*test)->status == OK)
 			count_of_succeeded_tests++;
 		total_number_of_tests++;
@@ -96,5 +100,6 @@ int	launch_tests(t_test **test)
 	routine_exit
 		= display_results(count_of_succeeded_tests, total_number_of_tests);
 	ft_cleartest_lst(&first, 1);
+	close(log_file);
 	return (routine_exit);
 }

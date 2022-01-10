@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   05_putstr.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/08 18:01:57 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/09 13:54:20 by cmariot          ###   ########.fr       */
+/*   Created: 2022/01/08 00:36:38 by cmariot           #+#    #+#             */
+/*   Updated: 2022/01/09 14:40:48 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
 
-int	putstr(void)
+int	main(int argc, char **argv, char **env)
 {
-	ft_putstr_fd("0123456789", 1);
+	if (argc && *argv && *env)
+	{
+		libft_launcher();
+	}
 	return (0);
 }

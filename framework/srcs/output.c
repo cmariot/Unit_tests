@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 21:42:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/08 22:38:35 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/09 13:57:53 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,49 +40,57 @@ int	display_results(int count_of_succeeded_tests, int total_number_of_tests)
 	}
 }
 
-void	check_output(t_test *test)
+void	check_stdout_output(t_test *test, int fd)
 {
 	char	*output;
 
-	output = filename_to_str(test->filename);
-	if (ft_strcmp(output, test->expected_output) == 0)
+	if (test->expected_output != NULL)
 	{
-		printf(GREEN"[OUTPUT : OK]"RESET);
+		output = filename_to_str(test->filename);
+		if (ft_strcmp(output, test->expected_output) == 0)
+		{
+			dprintf(fd, GREEN"[OUTPUT : OK]\n"RESET);
+		}
+		else
+		{
+			dprintf(fd, RED"[OUTPUT : KO]\n");
+			dprintf(fd, "\t\t\t[OUTPUT]:\t[%s]\n", output);
+			dprintf(fd, "\t\t\t[EXPECTED]:\t[%s]\n"RESET, test->expected_output);
+			if (fd != 1)
+				test->status = KO;
+		}
+		if (output)
+			free(output);
 	}
 	else
-	{
-		printf(RED"[OUTPUT : KO]"RESET);
-		test->status = KO;
-	}
-	if (output)
-		free(output);
+		dprintf(fd, "\n");
 }
 
-void	print_test_output(t_test *test, int test_number)
+void	print_test_output(t_test *test, int test_number, int fd)
 {
-	printf("%s_%02d", test->function, test_number);
-	printf(": %s:\t", test->test_name);
+	if (fd != 1)
+		print_test_output(test, test_number, 1);
+	dprintf(fd, "%s_%02d", test->function, test_number);
+	dprintf(fd, ": %s:\t", test->test_name);
 	if (test->status == OK)
-		printf(GREEN"[OK]"RESET);
-	else if (test->status == 255)
-		printf(RED"[KO]"RESET);
+		dprintf(fd, GREEN"[OK]"RESET);
+	else if (test->status == KO)
+		dprintf(fd, RED"[KO]"RESET);
 	else if (test->status == TIMEOUT)
-		printf(RED"[TIMEOUT]"RESET);
+		dprintf(fd, RED"[TIMEOUT]"RESET);
 	else if (test->status == SIGSEGV)
-		printf(RED"[SIGSEGV]"RESET);
+		dprintf(fd, RED"[SIGSEGV]"RESET);
 	else if (test->status == SIGBUS)
-		printf(RED"[SIGBUS]"RESET);
+		dprintf(fd, RED"[SIGBUS]"RESET);
 	else if (test->status == SIGABRT)
-		printf(RED"[SIGABRT]"RESET);
+		dprintf(fd, RED"[SIGABRT]"RESET);
 	else if (test->status == SIGFPE)
-		printf(RED"[SIGFPE]"RESET);
+		dprintf(fd, RED"[SIGFPE]"RESET);
 	else if (test->status == SIGPIPE)
-		printf(RED"[SIGPIPE]"RESET);
+		dprintf(fd, RED"[SIGPIPE]"RESET);
 	else if (test->status == SIGILL)
-		printf(RED"[SIGILL]"RESET);
+		dprintf(fd, RED"[SIGILL]"RESET);
 	else
-		printf(RED"[%d]"RESET, test->status);
-	if (test->expected_output != NULL)
-		check_output(test);
-	printf("\n");
+		dprintf(fd, RED"[EXIT : %d]"RESET, test->status);
+	check_stdout_output(test, fd);
 }

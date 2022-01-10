@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   05_putstr.c                                        :+:      :+:    :+:   */
+/*   tests.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/08 18:01:57 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/09 13:54:20 by cmariot          ###   ########.fr       */
+/*   Created: 2022/01/08 01:39:14 by cmariot           #+#    #+#             */
+/*   Updated: 2022/01/10 12:08:32 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests.h"
+#ifndef TESTS_H
+# define TESTS_H
 
-int	putstr(void)
-{
-	ft_putstr_fd("0123456789", 1);
-	return (0);
-}
+# include "libunit.h"
+# include "libft.h"
+
+//STRLEN
+
+int		libft_launcher(void);
+
+int		strlen_test(void);
+int		strtoll_test(void);
+
+#endif

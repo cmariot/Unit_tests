@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/08 23:19:41 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/09 14:02:11 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ all : $(NAME)
 
 # Compiling
 srcs_compil :
+		@make -C ../../framework
 		@printf "$(YE)Source code compilation ... \n"
 
 $(OBJS_DIR)%.o : %.c
@@ -93,7 +94,6 @@ obj_link :
 		@printf "$(CC) $(LFLAGS) $(OBJS) $(LIB_LFLAGS) -o $(NAME)$(RC)\n"
 
 $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
-		@make -C ../../framework
 		@mv ../../framework/libunit.a .
 		@$(CC) $(LFLAGS) $(OBJS) libunit.a -o $(NAME)
 		@printf "$(GR)Success, $(NAME) is ready.\n\n$(RC)"
@@ -108,17 +108,19 @@ test :	all
 
 # Remove object files
 clean :
+		@make -C ../../framework clean
 		@printf "Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
 		@printf "Done\n$(RC)"
 
 # Remove object and binary files
 fclean :
+		@make -C ../../framework fclean
 		@printf "Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
 		@printf "Done\n"
 		@printf "Removing $(NAME) ... "
-		@rm -f $(NAME)
+		@rm -f $(NAME) libunit.a *.log
 		@printf "Done\n$(RC)"
 
 print_divider :
